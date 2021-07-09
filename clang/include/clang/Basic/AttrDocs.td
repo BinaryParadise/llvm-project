@@ -6174,3 +6174,21 @@ def EnforceTCBLeafDocs : Documentation {
   - ``enforce_tcb_leaf(Name)`` indicates that this function is a part of the TCB named ``Name``
   }];
 }
+
+def RoutableDocs : Documentation {
+  let Category = DocCatDecl;
+  let Content = [{
+The ``pe_routed`` attribute can be applied to a function, a variable, or a
+type. This is useful when identifying functions, variables, or types that are
+expected to be generator a route.
+
+Consider the function declaration for a hypothetical function ``f``:
+
+.. code-block:: c++
+
+  void f(void) __attribute__((pe_routed("url")));
+
+When spelled as ``__attribute__((pe_routed))``, the pe_routed attribute can have
+one string arguments. The only one is the url of the route.
+  }];
+}

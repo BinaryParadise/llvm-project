@@ -7580,6 +7580,19 @@ static void handleMSAllocatorAttr(Sema &S, Decl *D, const ParsedAttr &AL) {
   handleSimpleAttribute<MSAllocatorAttr>(S, D, AL);
 }
 
+//===----------------------------------------------------------------------===//
+// Custom attr peregrine
+//===----------------------------------------------------------------------===//
+static void handlePeregrineTargetAttr(Sema &S, Decl *D, const ParsedAttr &AL) {
+    StringRef Str;
+    SourceLocation ArgLoc;
+    if (S.checkStringLiteralArgumentAttr(AL, 0, Str, &ArgLoc)) {
+        D->addAttr(::new (S.Context) RoutableAttr(S.getASTContext(), AL, Str));
+    } else {
+        S.Diag(D->getLocation(), diag::err_param_default_argument_missing);
+    }
+}
+
 static void handleAcquireHandleAttr(Sema &S, Decl *D, const ParsedAttr &AL) {
   if (AL.isUsedAsTypeAttr())
     return;
@@ -8341,6 +8354,9 @@ static void ProcessDeclAttribute(Sema &S, Scope *scope, Decl *D,
 
   case ParsedAttr::AT_UsingIfExists:
     handleSimpleAttribute<UsingIfExistsAttr>(S, D, AL);
+    break;
+  case ParsedAttr::AT_Routable:
+    handlePeregrineTargetAttr(S, D, AL);
     break;
   }
 }

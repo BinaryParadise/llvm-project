@@ -3874,3 +3874,10 @@ def EnforceTCBLeaf : InheritableAttr {
   let Documentation = [EnforceTCBLeafDocs];
   bit InheritEvenIfAlreadyPresent = 1;
 }
+
+def Routable : InheritableAttr {
+  let Args = [StringArgument<"url">];
+  let Spellings = [Clang<"pe_routed">];
+  let MeaningfulToClassTemplateDefinition = 1;
+  let Documentation = [RoutableDocs];
+}
